@@ -1,0 +1,39 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://empresa.corp.internal/vex/payment-api/2026-11-11",
+  "author": "SecOps & Supply Chain Defense Committee <secops@empresa.corp.internal>",
+  "timestamp": "2026-11-11T14:00:00Z",
+  "version": 1,
+  "tooling": "OpenVEX CLI / Cosign Attest v2.4",
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2022-24999",
+        "description": "Vulnerabilidade de Prototype Pollution na biblioteca qs/express"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/express@4.18.2"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "code_not_reachable",
+      "impact_statement": "A funcao qs vulneravel nao e invocada pelas rotas HTTP da aplicacao payment-api. O parser customizado de JSON isola completamente os parametros."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2020-28500",
+        "description": "ReDoS em lodash.template"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/lodash@4.17.20"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "A aplicacao consome exclusivamente metodos de colecao (lodash.get, lodash.merge) sem manipulacao de strings por templates."
+    }
+  ]
+}
+

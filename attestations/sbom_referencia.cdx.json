@@ -1,0 +1,99 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:3e671687-395b-41f5-a30f-a58921a69b79",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-12T18:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "author": "anchore",
+          "name": "syft",
+          "version": "1.19.0"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:oci/payment-api@sha256:b974e401bdbd40f4231e31dae9eee9d7053bef5457b4630f06b377603f1fcd8e",
+      "type": "container",
+      "name": "localhost:5000/payment-api",
+      "version": "sha256:b974e401bdbd40f4231e31dae9eee9d7053bef5457b4630f06b377603f1fcd8e"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:npm/%40corp/payment-vault@1.0.0",
+      "type": "library",
+      "name": "@corp/payment-vault",
+      "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Proprietary"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40corp/payment-vault@1.0.0"
+    },
+    {
+      "bom-ref": "pkg:npm/express@4.18.2",
+      "type": "library",
+      "name": "express",
+      "version": "4.18.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/express@4.18.2"
+    },
+    {
+      "bom-ref": "pkg:npm/lodash@4.17.20",
+      "type": "library",
+      "name": "lodash",
+      "version": "4.17.20",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/lodash@4.17.20"
+    },
+    {
+      "bom-ref": "pkg:npm/gpl-math-lib@1.0.0",
+      "type": "library",
+      "name": "gpl-math-lib",
+      "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-3.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/gpl-math-lib@1.0.0"
+    },
+    {
+      "bom-ref": "pkg:apk/alpine/busybox@1.37.0-r12?arch=x86_64",
+      "type": "operating-system",
+      "name": "busybox",
+      "version": "1.37.0-r12",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        }
+      ],
+      "purl": "pkg:apk/alpine/busybox@1.37.0-r12?arch=x86_64"
+    }
+  ]
+}
+

@@ -1,0 +1,106 @@
+name: Golden Pipeline Capstone - Esteira DevSecOps Blindada (SLSA L2 / Cosign Keyless)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+# BOAS PRÁTICAS: Princípio do Menor Privilégio
+# contents: read  -> Apenas leitura do repositório
+# packages: write -> Permite publicar no GitHub Container Registry (GHCR)
+# id-token: write -> Habilita emissão de JWT OIDC temporário para o Fulcio (Keyless)
+permissions:
+  contents: read
+  packages: write
+  # TODO (Trilha 3 - Aula 05): Descomente a linha abaixo para habilitar assinatura Keyless OIDC
+  # id-token: write
+
+jobs:
+  secure-build-and-sign:
+    runs-on: ubuntu-latest
+    steps:
+      # Fixação estrita por commit SHA imutável (imune a mutação de tags de terceiros)
+      - name: Checkout Source Code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      # Normaliza o nome do repositório para minúsculas (exigência do padrão OCI / GHCR)
+      - name: Normalize Image Repository Name (Lowercase)
+        run: |
+          LOWER_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_REPO=ghcr.io/${LOWER_REPO}/payment-api" >> "$GITHUB_ENV"
+
+      # TODO (Trilha 3 - Aula 05): Substitua a tag mutavel '@v4' pelo SHA-1 imutavel da v4.0.2:
+      # @60edb5dd545a775178f52524783378180af0d1f8
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Instalação segura desabilitando scripts de ciclo de vida (mitiga ataques de postinstall)
+      - name: Install Dependencies Safely
+        run: |
+          cd src
+          npm install --ignore-scripts
+
+      # Quality Gate 1: Policy as Code no Dockerfile e no Laudo OpenVEX antes do build
+      - name: Policy Gate (Conftest Rego v1 - Dockerfile & OpenVEX)
+        run: |
+          curl -fsSL https://github.com/open-policy-agent/conftest/releases/download/v0.56.0/conftest_0.56.0_Linux_x86_64.tar.gz -o conftest.tar.gz
+          tar xzf conftest.tar.gz conftest
+          sudo mv conftest /usr/local/bin/
+          rm -f conftest.tar.gz
+          conftest test docker/Dockerfile.app -p policies/dockerfile.rego
+          conftest test attestations/vex_customizado.openvex.json -p policies/openvex_audit.rego
+
+      - name: Log in to GHCR
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a0f # v5.1.0
+        with:
+          context: .
+          file: docker/Dockerfile.app
+          push: true
+          tags: ${{ env.IMAGE_REPO }}:${{ github.sha }}
+
+      - name: Install Cosign (Keyless Signer)
+        uses: sigstore/cosign-installer@e1523915720e311dceacf4d20eb426d4002c5ee6 # v3.4.0
+
+      # Geração de SBOM formal CycloneDX 1.6 e Quality Gate 2 (Licenças no SBOM)
+      - name: Generate CycloneDX SBOM & Enforce License Policy
+        run: |
+          mkdir -p dist
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin v1.19.0
+          syft ${{ env.IMAGE_REPO }}@${{ steps.docker_build.outputs.digest }} -o cyclonedx-json=dist/sbom.cdx.json
+          conftest test dist/sbom.cdx.json -p policies/sbom_license.rego
+
+      # Assinatura Keyless com Sigstore (Cosign + Fulcio + Rekor Público)
+      - name: Sign Container Image (Keyless OIDC)
+        run: |
+          cosign sign --yes ${{ env.IMAGE_REPO }}@${{ steps.docker_build.outputs.digest }}
+          echo "=================================================================="
+          echo "Comando de verificacao publica para o seu relatorio (Trilha 3):"
+          echo "cosign verify --certificate-identity=\"https://github.com/${{ github.repository }}/.github/workflows/golden_pipeline_capstone.yml@${{ github.ref }}\" --certificate-oidc-issuer=\"https://token.actions.githubusercontent.com\" ${{ env.IMAGE_REPO }}@${{ steps.docker_build.outputs.digest }}"
+          echo "=================================================================="
+
+      # Anexar SBOM, atestar laudo OpenVEX in-toto e gerar Dossiê de Conformidade
+      - name: Attest OpenVEX & Generate Compliance Dossier
+        run: |
+          cosign attest --yes --predicate dist/sbom.cdx.json --type cyclonedx ${{ env.IMAGE_REPO }}@${{ steps.docker_build.outputs.digest }}
+          cosign attest --yes --predicate attestations/vex_customizado.openvex.json --type openvex ${{ env.IMAGE_REPO }}@${{ steps.docker_build.outputs.digest }}
+          python3 tools/generate_compliance_dossier.py
+
+      # Publicar evidências imutáveis como Build Artifacts
+      - name: Upload Evidence Artifacts
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        with:
+          name: supply-chain-evidence-bundle
+          path: |
+            dist/sbom.cdx.json
+            dist/dossie_conformidade.json
+            attestations/vex_customizado.openvex.json

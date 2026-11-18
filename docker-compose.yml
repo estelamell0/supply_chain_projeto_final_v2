@@ -1,0 +1,45 @@
+services:
+  # Registry OCI Local para armazenamento de imagens, SBOMs anexados e assinaturas Cosign
+  registry:
+    image: registry:2
+    container_name: supply_chain_capstone_registry
+    ports:
+      - "5000:5000"
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    networks:
+      capstone_net:
+        aliases:
+          - registry
+          - localhost
+
+  # Container de trabalho do Projeto Final com todas as ferramentas DevSecOps pré-instaladas
+  # Compartilha o namespace de rede do registry (network_mode: "service:registry") para que
+  # localhost:5000 funcione diretamente tanto no Docker CLI quanto no syft, trivy e cosign.
+  capstone:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: supply-chain-capstone:latest
+    container_name: supply_chain_capstone
+    working_dir: /workspace
+    network_mode: "service:registry"
+    environment:
+      - USER=ci-runner-bot
+      - REGISTRY_HOST=localhost:5000
+      - DOCKER_CLI_EXPERIMENTAL=enabled
+      - COSIGN_EXPERIMENTAL=1
+      - SYFT_CHECK_FOR_APP_UPDATE=false
+      - TRIVY_SKIP_VERSION_CHECK=true
+      - TRIVY_DISABLE_TELEMETRY=true
+    volumes:
+      - .:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - registry
+    stdin_open: true
+    tty: true
+
+networks:
+  capstone_net:
+    driver: bridge

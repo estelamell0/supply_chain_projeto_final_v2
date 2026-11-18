@@ -1,0 +1,20 @@
+# ==============================================================================
+# .gitignore - Proteção de Chaves Privadas & Preservação dos Mocks do Capstone
+# ==============================================================================
+
+# 1. NUNCA envie chaves privadas para repositórios públicos
+cosign.key
+*.key
+*.pem
+
+# 2. Arquivos temporários de sistema e Python
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+
+# 3. IMPORTANTE (Trilhas 2 e 3):
+# NÃO ignore src/node_modules/, pois os pacotes mocks (@corp/payment-vault,
+# gpl-math-lib, express, lodash) precisam subir para o GitHub Actions na Trilha 3.
+!src/node_modules/
+!src/node_modules/**

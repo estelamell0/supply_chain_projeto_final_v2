@@ -1,0 +1,5 @@
+# Evita falha do BuildKit no Windows com symlinks criados pelo npm em node_modules/.bin
+**/node_modules/.bin
+dist/
+cosign.key
+.git

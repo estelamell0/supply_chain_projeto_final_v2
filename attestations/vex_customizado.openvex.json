@@ -1,0 +1,52 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://empresa.corp.internal/vex/payment-api/2026-11-18",
+  "author": "SecOps & Supply Chain Defense Committee <secops@empresa.corp.internal>",
+  "timestamp": "2026-11-18T12:00:00Z",
+  "version": 1,
+  "tooling": "OpenVEX v0.2.0 / Cosign Attest v2.4",
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2022-24999",
+        "description": "Vulnerabilidade de Prototype Pollution na biblioteca qs/express"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/express@4.18.2"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "code_not_reachable",
+      "impact_statement": "A funcao qs vulneravel nao e invocada pelas rotas HTTP da aplicacao payment-api. O parser customizado de JSON isola completamente os parametros."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2020-28500",
+        "description": "ReDoS em lodash.template"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/lodash@4.17.20"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "A aplicacao consome exclusivamente metodos de colecao (lodash.get, lodash.merge) sem manipulacao de strings por templates."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2024-29041",
+        "description": "Open Redirect em versoes anteriores do Express.js ao passar URLs nao confiaveis em res.redirect()"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/express@4.18.2"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "TODO_SUBSTITUA_POR_JUSTIFICATIVA_OFICIAL_OPENVEX",
+      "impact_statement": "TODO: Substitua este texto explicando tecnicamente por que a payment-api nao e afetada por esta CVE (ex.: o microsservico expoe apenas endpoints REST JSON e nao utiliza res.redirect com parametros do usuario)."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+name: Pipeline Insegura de Build e Deploy (Vulneravel a PPE e Injeção)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# FALHA CRÍTICA 1: Permissões globais excessivas (write-all permite que um atacante adultere releases e código)
+permissions: write-all
+
+jobs:
+  build-and-deploy:
+    # Desabilitado em runtime (if: false) para nao conflitar com a Golden Pipeline na Trilha 3,
+    # preservando integralmente o manifesto para auditoria estatica na Trilha 1.
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      # FALHA CRÍTICA 2: Actions referenciadas por tags mutáveis (@v3, @v4) sujeitas a sequestro de conta
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      # FALHA CRÍTICA 3: npm install sem --ignore-scripts permite execução de ganchos maliciosos (postinstall)
+      - name: Install Dependencies
+        run: |
+          cd src
+          npm install
+
+      - name: Build and Push Docker Image
+        run: |
+          echo "Compilando container sem verificacao de integridade..."
+          # FALHA CRÍTICA 4: Publicacao usando apenas tag mutavel :latest sem digest imutavel e sem assinatura
+          docker build -t minha-empresa/payment-api:latest -f docker/Dockerfile.app .

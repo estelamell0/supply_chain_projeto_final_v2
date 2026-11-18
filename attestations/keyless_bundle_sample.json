@@ -1,0 +1,41 @@
+{
+  "mediaType": "application/vnd.dev.sigstore.bundle+json;version=0.2",
+  "verificationMaterial": {
+    "certificate": {
+      "rawBytes": "MIIDazCCAlOgAwIBAgIUPLACEHOLDER_CERT_BYTES..."
+    },
+    "tlogEntries": [
+      {
+        "logIndex": "12984920",
+        "logId": {
+          "keyId": "w56/w6j/PLACEHOLDER_REKOR_LOG_ID"
+        },
+        "kindVersion": {
+          "kind": "hashedrekord",
+          "version": "0.0.1"
+        },
+        "integratedTime": "1731333600",
+        "inclusionPromise": {
+          "signedEntryTimestamp": "MEQCIFzPLACEHOLDER_SET_TIMESTAMP_BYTES..."
+        }
+      }
+    ]
+  },
+  "messageSignature": {
+    "messageDigest": {
+      "algorithm": "SHA2_256",
+      "digest": "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+    },
+    "signature": "MEUCIQDPLACEHOLDER_SIGNATURE_BYTES..."
+  },
+  "simulatedIdentity": {
+    "issuer": "https://token.actions.githubusercontent.com",
+    "subject": "https://github.com/empresa-fintech/payment-api/.github/workflows/golden_pipeline_capstone.yml@refs/heads/main",
+    "repository": "empresa-fintech/payment-api",
+    "sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "workflow": ".github/workflows/golden_pipeline_capstone.yml",
+    "rekorLogIndex": 12984920,
+    "fulcioValidityMinutes": 10
+  }
+}
+

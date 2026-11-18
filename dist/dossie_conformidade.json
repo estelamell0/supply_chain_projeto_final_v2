@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-11-12T01:25:28.634036+00:00",
+  "standard_compliance": [
+    "SLSA v1.0 Level 2",
+    "NIST SP 800-218 (SSDF)",
+    "EO 14028 (NTIA Minimum Elements)"
+  ],
+  "target_application": "payment-api-service:1.0.0",
+  "evidence_chain": {
+    "dependency_lockfile": {
+      "path": "src/package-lock.json",
+      "sha256": "1fffa39a01fe295353789258ee58186dc51780a1143d2bbb122800a27da248d4",
+      "status": "PINNED_DETERMINISTIC"
+    },
+    "sbom": {
+      "format": "CycloneDX 1.6 JSON",
+      "sha256": "f768e87a4db1e8d1785d6a02adbd69b42ea75165879ba650157e8acd681c27f0",
+      "status": "ATTACHED_TO_OCI_REGISTRY"
+    },
+    "openvex": {
+      "specification": "OpenVEX v0.2.0",
+      "justification": "code_not_reachable",
+      "status": "ATTESTED_IN_TOTO"
+    },
+    "slsa_provenance": {
+      "specification": "SLSA Provenance v1.0",
+      "builder": "https://github.com/actions/runner/slsa-builder-l2",
+      "status": "ATTESTED_IN_TOTO"
+    }
+  }
+}
