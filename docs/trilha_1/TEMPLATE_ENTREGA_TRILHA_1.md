@@ -58,11 +58,9 @@
 
 ---
 
-## Etapa 4: Policy as Code (Rego v1) & Autoverificação — *Aulas 07 & 08* (`3,5 pts`)
+## Etapa 4: Policy as Code (Rego v1) & Fechamento — *Aulas 07 & 08* (`3,5 pts`)
 
 1. **Por que `deny contains msg if { ... }` em `import rego.v1` é superior a um simples `allow := false`?** [...]
 2. **Arquivo entregue:** [`policies/openvex_audit.rego`](../../policies/openvex_audit.rego) *(marque após completar as Regras 2 e 3: `[ ] Regras 2 e 3 implementadas sem TODOs`)*
-3. **Saída do validador automático (`python3 tools/selfcheck_capstone.py --trilha 1`):**
-   ```text
-   [Cole aqui ou transcreva o resultado OK do selfcheck --trilha 1]
-   ```
+
+> 💡 **Conferência Opcional (Recomendada):** Caso queira verificar automaticamente se todos os arquivos obrigatórios foram criados e se não restou nenhuma lacuna `[...]`, execute `python3 tools/selfcheck_capstone.py --trilha 1` (não é obrigatório colar a saída neste relatório).

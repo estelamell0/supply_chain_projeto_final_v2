@@ -1,58 +1,61 @@
-# Índice & Instruções Gerais — Projeto Final Capstone (`docs/`)
+# Guia Geral da Documentação (`docs/`)
 
-Bem-vindo(a) à central de documentação do **Projeto Final de Supply Chain Security (`payment-api`)**.  
-Todas as três trilhas cobrem **todos os conceitos das Aulas 01 a 08**, valem até **10,0 pontos** e foram desenhadas para conclusão em **até 2 horas** (~95 a 100 min).
+Esta pasta guarda todas as explicações, manuais e modelos de entrega do Projeto Final (`payment-api`).  
+Não importa qual trilha você escolha: todas ensinam os mesmos 8 assuntos do curso, valem até **10,0 pontos** e foram planejadas para durar **até 2 horas** (~95 a 100 min).
 
 ---
 
-## 1. Navegação da Documentação
+## 1. O Que Tem Aqui Dentro?
 
-### Guias Gerais (`docs/`)
-- [`RUBRICA_AVALIACAO.md`](./RUBRICA_AVALIACAO.md) — Critérios e pesos oficiais (0 a 10,0) nas 5 dimensões.
-- [`CHECKLIST_ENTREGA.md`](./CHECKLIST_ENTREGA.md) — Lista de verificação final para todas as trilhas.
-- [`COMO_LER_OS_ARTEFATOS.md`](./COMO_LER_OS_ARTEFATOS.md) — Guia de leitura de SBOM, OpenVEX, SLSA, Bundle Sigstore e Rego v1.
-- [`README_POLITICAS.md`](./README_POLITICAS.md) — Resumo e exemplos das políticas Rego v1 em [`../policies/`](../policies/).
+### Documentos Gerais (`docs/`)
+- [`GLOSSARIO_SUPPLY_CHAIN.md`](./GLOSSARIO_SUPPLY_CHAIN.md) — **Seu dicionário de bolso:** explica de forma simples todas as siglas e termos técnicos usados no projeto.
+- [`COMO_LER_OS_ARTEFATOS.md`](./COMO_LER_OS_ARTEFATOS.md) — Mostra onde olhar dentro dos arquivos JSON (SBOM, OpenVEX, SLSA, Bundle) e das regras Rego.
+- [`RUBRICA_AVALIACAO.md`](./RUBRICA_AVALIACAO.md) — Explica quanto vale cada parte da sua entrega (de 0 a 10,0).
+- [`CHECKLIST_ENTREGA.md`](./CHECKLIST_ENTREGA.md) — Lista simples para você marcar e ter certeza de que não esqueceu nada.
+- [`README_POLITICAS.md`](./README_POLITICAS.md) — Explica o que faz cada regra automática da pasta [`../policies/`](../policies/).
 
-### Pastas por Trilha
-| Trilha | Pasta | Roteiro Passo a Passo | Template(s) de Entrega |
+### Pastas das Trilhas
+| Trilha | Pasta | Manual Passo a Passo | Modelo de Entrega |
 | :--- | :--- | :--- | :--- |
-| **🔵 Trilha 1 — Análise, Auditoria & Design** *(Zero Docker/Nuvem)* | [`trilha_1/`](./trilha_1/) | [`TRILHA_1_ANALISE_ARQUITETURA.md`](./trilha_1/TRILHA_1_ANALISE_ARQUITETURA.md) | [`TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) • [`TEMPLATE_ENTREGA_TRILHA_1.docx`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.docx) *(Word)* |
-| **🟡 Trilha 2 — Sandbox CLI Local** *(Docker + Registry)* | [`trilha_2/`](./trilha_2/) | [`TRILHA_2_EXECUCAO_LOCAL_CLI.md`](./trilha_2/TRILHA_2_EXECUCAO_LOCAL_CLI.md) | [`TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md) |
-| **🔴 Trilha 3 — Esteira em Nuvem & Keyless** *(GitHub Actions)* | [`trilha_3/`](./trilha_3/) | [`TRILHA_3_CICD_NUVEM_KEYLESS.md`](./trilha_3/TRILHA_3_CICD_NUVEM_KEYLESS.md) | [`TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md) |
+| **🔵 Trilha 1 — Leitura e Código** *(sem Docker, sem nuvem)* | [`trilha_1/`](./trilha_1/) | [`MANUAL_TRILHA_1.md`](./trilha_1/MANUAL_TRILHA_1.md) | [`TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) • [`Versão Word (.docx)`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.docx) |
+| **🟡 Trilha 2 — Comandos no Docker** *(roda no seu PC)* | [`trilha_2/`](./trilha_2/) | [`MANUAL_TRILHA_2.md`](./trilha_2/MANUAL_TRILHA_2.md) | [`TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md) |
+| **🔴 Trilha 3 — Automação no GitHub** *(roda na nuvem)* | [`trilha_3/`](./trilha_3/) | [`MANUAL_TRILHA_3.md`](./trilha_3/MANUAL_TRILHA_3.md) | [`TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md) |
 
 ---
 
-## 2. Como Funciona & Regras Gerais
+## 2. Regras Simples para Não Ter Erro
 
-1. **Escolha 1 Trilha (ou evolua de forma incremental):**
-   - Você deve concluir **pelo menos 1 trilha** (`Trilha 1`, `Trilha 2` ou `Trilha 3`).
-   - Se quiser evoluir (`1 → 2 → 3`), marque **`[x] Modo Incremental`** no cabeçalho dos templates das Trilhas 2 e 3 para reutilizar os artefatos já criados e dispensar o **Bloco Express** repetido.
-2. **Aterrissagem Segura:**
-   - Se iniciar na Trilha 2 ou 3 e enfrentar bloqueios de ambiente perto do prazo, você pode migrar para a **Trilha 1** entregando o relatório e os artefatos estáticos correspondentes sem prejuízo de nota.
-3. **Segurança de Chaves:**
-   - Nunca inclua arquivos `cosign.key` reais em repositórios públicos no GitHub.
-4. **Autoverificação Obrigatória Antes da Entrega:**
+1. **Escolha 1 Trilha (ou faça em sequência):**
+   - Você só precisa entregar **1 trilha** (`Trilha 1`, `Trilha 2` ou `Trilha 3`).
+   - Se quiser fazer outra trilha depois (`1 → 2 → 3`), marque **`[x] Modo Incremental`** no topo do novo modelo de entrega. Isso permite reaproveitar seus arquivos e pular perguntas repetidas.
+2. **Plano B sem perda de nota ("Aterrissagem Segura"):**
+   - Começou na Trilha 2 ou 3 e o computador/internet travou perto do prazo? Pode mudar para a **Trilha 1** sem perder pontos. Basta preencher o modelo da Trilha 1 e entregar os arquivos estáticos dela.
+3. **Cuidado com a chave privada (`cosign.key`):**
+   - Nunca envie o arquivo `cosign.key` para um repositório público do GitHub.
+4. **Script de conferência (Opcional na Trilha 1 / Obrigatório nas Trilhas 2 e 3):**
    ```bash
    python3 tools/selfcheck_capstone.py --trilha <1|2|3>
    ```
-   *(Adicione `--incremental` se estiver usando o Modo Incremental.)*
+   *(Se estiver usando o Modo Incremental, adicione `--incremental` no final.)*
 
 ---
 
-## 3. O Que Entregar por Trilha
+## 3. O Que Você Precisa Entregar em Cada Trilha
 
-- **🔵 Trilha 1:**
-  - Relatório preenchido ([`docs/trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) ou versão Word [`TEMPLATE_ENTREGA_TRILHA_1.docx`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.docx));
-  - `docker/Dockerfile.hardened` criado com `@sha256:` e `USER node`;
-  - [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) completo sem marcadores `TODO`;
-  - [`policies/openvex_audit.rego`](../policies/openvex_audit.rego) com as Regras 2 e 3 implementadas em `import rego.v1`.
-- **🟡 Trilha 2:**
-  - Relatório preenchido ([`docs/trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md)) com logs reais (`$IMAGE_DIGEST`, bloqueio de *tag tampering* no Cosign, `verify-attestation`, `FAIL`/`PASS` do Conftest e Dossiê);
-  - `dist/sbom.cdx.json` e `dist/dossie_conformidade.json` gerados localmente;
-  - [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) e [`policies/openvex_audit.rego`](../policies/openvex_audit.rego) completos sem `TODO`s;
-  - Chave privada `cosign.key` removida.
-- **🔴 Trilha 3:**
-  - Repositório público no GitHub com os `TODO`s resolvidos em [`.github/workflows/golden_pipeline_capstone.yml`](../.github/workflows/golden_pipeline_capstone.yml) (`id-token: write` + SHA-1 em `setup-node`), [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) e [`policies/openvex_audit.rego`](../policies/openvex_audit.rego);
-  - Link/log da **1ª run bloqueada** (`GPL-3.0`) + commit de remediação + link da **2ª run verde** com Artifacts;
-  - Pacote público no GHCR + saída do `cosign verify` / `verify-attestation` e Log Index do Rekor;
-  - Relatório preenchido ([`docs/trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md)).
+- **🔵 Na Trilha 1:**
+  1. O relatório preenchido ([`TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) ou o arquivo Word [`TEMPLATE_ENTREGA_TRILHA_1.docx`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.docx));
+  2. O arquivo `docker/Dockerfile.hardened` criado por você (com endereço `@sha256:` fixo e `USER node`);
+  3. O arquivo [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) com o `TODO` resolvido;
+  4. O arquivo [`policies/openvex_audit.rego`](../policies/openvex_audit.rego) com as Regras 2 e 3 completas.
+
+- **🟡 Na Trilha 2:**
+  1. O relatório preenchido ([`TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md)) com as saídas copiadas do terminal;
+  2. Os arquivos `dist/sbom.cdx.json` e `dist/dossie_conformidade.json` gerados pelos comandos;
+  3. Os arquivos [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) e [`policies/openvex_audit.rego`](../policies/openvex_audit.rego) sem `TODO`s;
+  4. Garantir que `cosign.key` foi apagado.
+
+- **🔴 Na Trilha 3:**
+  1. Repositório público no GitHub com os `TODO`s resolvidos em [`.github/workflows/golden_pipeline_capstone.yml`](../.github/workflows/golden_pipeline_capstone.yml), [`attestations/vex_customizado.openvex.json`](../attestations/vex_customizado.openvex.json) e [`policies/openvex_audit.rego`](../policies/openvex_audit.rego);
+  2. Link e trecho do erro da **1ª execução bloqueada** (por causa da `gpl-math-lib`) + commit da correção + link da **2ª execução verde**;
+  3. Pacote público no GHCR + saída da verificação pública (`cosign verify` e `verify-attestation`) + registro no Rekor;
+  4. O relatório preenchido ([`TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md)).

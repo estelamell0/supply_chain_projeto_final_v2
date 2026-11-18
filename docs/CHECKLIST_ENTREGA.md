@@ -1,44 +1,42 @@
-# Checklist Oficial de Entrega — Projeto Final Capstone (v2)
+# Checklist Final — Conferência Antes de Entregar
 
-**Disciplina:** Supply Chain Security & DevSecOps Architecture (Turma 1746)  
-**Alvo:** Microsserviço `payment-api`  
-**Nota Máxima:** `10,0` em qualquer trilha *(Tempo-alvo: ~95–100 min | Teto: 2h00)*
+Use esta lista para ter certeza de que tudo na sua trilha está completo.
 
 ---
 
-## 📌 Regras Gerais (Todas as Trilhas)
-- [ ] Escolha **1 Trilha** (ou avance no **Modo Incremental**, marcando `[x] Modo Incremental` nos templates 2 e 3 para reutilizar artefatos e pular o Bloco Express).
-- [ ] **Segurança de Chaves:** Nunca envie `cosign.key` para repositórios públicos no GitHub.
-- [ ] **Autoverificação:** Execute `python3 tools/selfcheck_capstone.py --trilha <1|2|3>` (use `--incremental` se aplicável).
+## 📌 Regras Gerais
+- [ ] Escolhi **1 Trilha** (ou marquei `[x] Modo Incremental` nos templates 2 e 3 caso já tenha feito uma trilha antes).
+- [ ] **Segurança:** Conferi que não deixei nenhum arquivo `cosign.key` (chave privada) na pasta raiz antes de enviar para o GitHub.
+- [ ] **Conferência automática:** Nas Trilhas 2 e 3, rodei `python3 tools/selfcheck_capstone.py --trilha <2|3>` e não deu erros críticos. *(Na Trilha 1, rodar o script é opcional — recomendado apenas para checar se você não esqueceu nenhum arquivo ou lacuna `[...]`).*
 
 ---
 
-## 🔄 Transição Fluida ("Aterrissagem Segura")
-Se iniciou na **Trilha 2** ou **Trilha 3** e encontrou bloqueios de ambiente perto do prazo, migre com segurança para a **Trilha 1** utilizando `TEMPLATE_ENTREGA_TRILHA_1.md` e entregando os arquivos estáticos abaixo (continua valendo até `10,0`).
+## 🔄 Plano B ("Aterrissagem Segura")
+Se você começou na **Trilha 2** ou **Trilha 3** e teve algum problema técnico perto do prazo final, pode mudar para a **Trilha 1** sem perder nota. Basta entregar o relatório da Trilha 1 preenchido e os 3 arquivos estáticos abaixo.
 
 ---
 
-## 🔵 Trilha 1 — Análise, Auditoria Estática & Design *(~95 min)*
-- [ ] [`docs/trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) preenchido sem lacunas `[...]`.
-- [ ] `docker/Dockerfile.hardened` criado (`FROM ...@sha256:` e `USER node`).
-- [ ] `attestations/vex_customizado.openvex.json` atualizado sem marcadores `TODO`.
-- [ ] `policies/openvex_audit.rego` com as Regras 2 e 3 implementadas em `import rego.v1`.
-- [ ] `python3 tools/selfcheck_capstone.py --trilha 1` finalizado sem erros críticos.
+## 🔵 Trilha 1 — Leitura, Auditoria e Código
+- [ ] [`docs/trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.md) (ou o Word [`TEMPLATE_ENTREGA_TRILHA_1.docx`](./trilha_1/TEMPLATE_ENTREGA_TRILHA_1.docx)) preenchido sem deixar `[...]` sobrando.
+- [ ] `docker/Dockerfile.hardened` criado (com imagem fixa por `@sha256:` e `USER node`).
+- [ ] `attestations/vex_customizado.openvex.json` preenchido sem nenhum `TODO`.
+- [ ] `policies/openvex_audit.rego` com as Regras 2 e 3 funcionando em `import rego.v1`.
+- *(Opcional)* Rodar `python3 tools/selfcheck_capstone.py --trilha 1` só para conferir.
 
 ---
 
-## 🟡 Trilha 2 — Sandbox CLI Local & Enforcement *(~100 min)*
-- [ ] [`docs/trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md) preenchido (com Bloco Express de Aulas 01/05 ou `[x] Modo Incremental`).
-- [ ] `dist/sbom.cdx.json` e `dist/dossie_conformidade.json` gerados localmente.
+## 🟡 Trilha 2 — Comandos no Docker (CLI Local)
+- [ ] [`docs/trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md`](./trilha_2/TEMPLATE_ENTREGA_TRILHA_2.md) preenchido (com o Bloco Express no final, ou `[x] Modo Incremental` marcado).
+- [ ] `dist/sbom.cdx.json` e `dist/dossie_conformidade.json` gerados dentro do container.
 - [ ] `attestations/vex_customizado.openvex.json` e `policies/openvex_audit.rego` completos sem `TODO`s.
-- [ ] Evidências reais no template: `$IMAGE_DIGEST`, bloqueio no *tag tampering* (`busybox`), `verify-attestation` e `FAIL` + `PASS` no Conftest.
-- [ ] `cosign.key` removida + `python3 tools/selfcheck_capstone.py --trilha 2` sem erros críticos.
+- [ ] Provas coladas no relatório: código `$IMAGE_DIGEST`, erro de bloqueio ao trocar a imagem por `busybox`, verificação da atestação, bloqueio (`FAIL`) + aprovação (`PASS`) no Conftest.
+- [ ] `cosign.key` apagado (`rm -f cosign.key`) + `python3 tools/selfcheck_capstone.py --trilha 2` sem erros.
 
 ---
 
-## 🔴 Trilha 3 — Engenharia de Esteira em Nuvem & Keyless OIDC *(~95 min)*
-- [ ] Repositório **público** no GitHub preservando `src/node_modules/@corp/payment-vault`.
-- [ ] `TODO`s resolvidos em `golden_pipeline_capstone.yml` (`id-token: write` + SHA-1 em `setup-node`), `vex_customizado.openvex.json` e `policies/openvex_audit.rego`.
-- [ ] Link/log da **1ª run bloqueada (`GPL-3.0`)** + commit de remediação + link da **2ª run verde**.
-- [ ] Pacote no **GHCR definido como Public** + saída do `cosign verify` e `verify-attestation` (via Codespaces/CLI) + índice no **Rekor**.
-- [ ] [`docs/trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md) preenchido (com Bloco Express ou `[x] Modo Incremental`) e validado com `python3 tools/selfcheck_capstone.py --trilha 3`.
+## 🔴 Trilha 3 — Automação no GitHub & Keyless
+- [ ] Repositório **público** no GitHub com a pasta `src/node_modules/` incluída no envio.
+- [ ] `TODO`s resolvidos em `.github/workflows/golden_pipeline_capstone.yml` (`id-token: write` e SHA-1 no `setup-node`), `vex_customizado.openvex.json` e `policies/openvex_audit.rego`.
+- [ ] Link/trecho do log da **1ª execução bloqueada** (`GPL-3.0`) + commit removendo `gpl-math-lib` + link da **2ª execução verde**.
+- [ ] Pacote `payment-api` no **GHCR mudado para Public** + saída do `cosign verify` e `verify-attestation` + número/link do **Rekor**.
+- [ ] [`docs/trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md`](./trilha_3/TEMPLATE_ENTREGA_TRILHA_3.md) preenchido e validado com `python3 tools/selfcheck_capstone.py --trilha 3`.

@@ -1,50 +1,40 @@
-# Rubrica Oficial de Avaliação — Projeto Final Capstone (v2 — Nota Máxima: 10,0)
+# Como Sua Entrega Será Avaliada (Nota Máxima: 10,0)
 
-Todas as três trilhas permitem alcançar a **nota máxima 10,0**, têm **teto máximo estimado de 2 horas** e cobrem **todos os módulos das Aulas 01 a 08** em camadas tecnológicas progressivas (*Estático/Código* → *CLI Local* → *Cloud CI/CD Keyless*).
+Todas as três trilhas valem **10,0 pontos** e cobrem os **mesmos 8 módulos do curso (Aulas 01 a 08)**, só mudando o nível de ferramenta usada (análise no código, terminal Docker local ou esteira automática na nuvem).
 
 ---
 
-## Matriz Geral de Pesos (Total = 10,0 Pontos)
+## Resumo dos Pesos (Total = 10,0 Pontos)
 
-| Dimensão Avaliada | Aulas Cobertas | Peso | O Que É Verificado em Essência |
+| O Que Avaliamos | Aulas | Peso | Em Resumo |
 | :--- | :---: | :---: | :--- |
-| **1. Higiene de Dependências, Build & Frameworks** | **01, 02** | **2,0** | Mapeamento SLSA/SSDF, isolamento `.npmrc`, `--ignore-scripts`, tratamento de range semântico e remoção/bloqueio de `GPL-3.0`. |
-| **2. SBOM & Triagem OpenVEX** | **03, 04** | **2,0** | Inspeção ou geração de CycloneDX 1.6 (PURLs), scan/correlação de CVEs e redação/atestação de `attestations/vex_customizado.openvex.json`. |
-| **3. Integridade Criptográfica & Segurança de CI/CD** | **05, 06** | **2,5** | Hardening de Dockerfile/Workflow (`permissions`, SHA pinning), imutabilidade por `@sha256:`, Cosign (local ou Keyless OIDC Fulcio/Rekor) e *in-toto*. |
-| **4. Policy as Code (Rego v1 / Conftest)** | **07** | **2,0** | Implementação das regras `deny contains msg if` em `policies/openvex_audit.rego` e/ou execução comprovando `FAIL` e `PASS`. |
-| **5. Dossiê de Evidências, Síntese & Autoverificação** | **08 (+ Bloco Express)** | **1,5** | Organização do template da trilha, dossiê `dossie_conformidade.json` ou artifacts, `selfcheck_capstone.py` limpo e Bloco Express (dispensado no Modo Incremental). |
+| **1. Cuidados com Dependências, Build & Conceitos** | **01, 02** | **2,0** | Entender riscos da cadeia, isolar pacotes privados (`.npmrc`), travar scripts (`--ignore-scripts`) e lidar com a biblioteca `GPL-3.0`. |
+| **2. Lista de Componentes (SBOM) & Triagem (OpenVEX)** | **03, 04** | **2,0** | Ler ou gerar o SBOM, analisar vulnerabilidades e preencher o laudo `vex_customizado.openvex.json`. |
+| **3. Assinatura Digital & Segurança da Esteira (CI/CD)** | **05, 06** | **2,5** | Deixar Dockerfile e Workflow seguros (menor permissão, hashes fixos) e assinar/verificar imagens com Cosign. |
+| **4. Regras Automáticas de Bloqueio (Rego v1)** | **07** | **2,0** | Completar regras no arquivo `policies/openvex_audit.rego` e/ou provar o bloqueio e a aprovação com Conftest. |
+| **5. Relatório Final & Dossiê** | **08** | **1,5** | Entregar o template bem preenchido com as provas pedidas e o dossiê/artifacts da trilha. |
 
 ---
 
-## Critérios Detalhados por Trilha
+## Detalhes por Trilha
 
-### 🔵 Trilha 1 — Análise, Auditoria Estática & Design (10,0 pts | Alvo: ~95 min)
-| Critério | Pontos | Requisitos para Pontuação Máxima |
-| :--- | :---: | :--- |
-| **1. Matriz 6 Elos & Auditoria de Dependências** | **2,0** | Matriz dos Elos 2–6 preenchida com precisão contra **SLSA v1.0 / NIST SSDF** + diagnóstico de `.npmrc`, `--ignore-scripts` e risco de `^4.18.2` vs. lockfile. |
-| **2. SBOM & Redação OpenVEX (`vex_customizado`)** | **2,0** | Listagem dos PURLs e identificação da `GPL-3.0` em `sbom_referencia.cdx.json` + 3º statement (`CVE-2024-29041`) completo em `attestations/vex_customizado.openvex.json` sem `TODO`s. |
-| **3. `Dockerfile.hardened`, CI/CD & Bundle Sigstore** | **2,5** | `docker/Dockerfile.hardened` com digest SHA-256 e `USER node` + respostas precisas aos 3 checks de `pipeline_vulneravel.yml` vs `golden_pipeline_capstone.yml` + papéis do Fulcio/Rekor. |
-| **4. Design Rego v1 (`openvex_audit.rego`)** | **2,0** | Implementação das Regras 2 e 3 em `policies/openvex_audit.rego` com sintaxe `import rego.v1` válida + explicação sobre `deny contains` vs `allow := false`. |
-| **5. Relatório & Self-Check** | **1,5** | `TEMPLATE_ENTREGA_TRILHA_1.md` completo sem lacunas `[...]` e saída limpa de `python3 tools/selfcheck_capstone.py --trilha 1`. |
+### 🔵 Trilha 1 — Leitura, Auditoria e Código (10,0 pts)
+1. **Matriz dos 6 Elos & Dependências (`2,0 pts`):** Preencher a tabela dos elos 2 a 6 e explicar `.npmrc`, `--ignore-scripts` e o risco do `^4.18.2`.
+2. **SBOM & OpenVEX (`2,0 pts`):** Listar os PURLs e o pacote `GPL-3.0` do SBOM de exemplo + completar o 3º item (`CVE-2024-29041`) em `attestations/vex_customizado.openvex.json` sem deixar `TODO`.
+3. **`Dockerfile.hardened`, CI/CD & Sigstore (`2,5 pts`):** Criar `docker/Dockerfile.hardened` com endereço `@sha256:` fixo e `USER node` + responder às 3 perguntas de CI/CD e Fulcio/Rekor.
+4. **Regras em Rego v1 (`2,0 pts`):** Completar as Regras 2 e 3 em `policies/openvex_audit.rego` com sintaxe válida + explicar por que usar `deny contains`.
+5. **Relatório Completo (`1,5 pt`):** `TEMPLATE_ENTREGA_TRILHA_1.md` (ou `.docx`) todo preenchido sem `[...]` e entrega organizada dos 3 arquivos criados *(o `selfcheck` é opcional nesta trilha)*.
 
----
+### 🟡 Trilha 2 — Comandos no Docker Local (10,0 pts)
+1. **Sandbox, Build & SBOM (`2,0 pts`):** Instalar dependências com `--ignore-scripts`, enviar imagem para `localhost:5000`, pegar o `$IMAGE_DIGEST` e gerar `dist/sbom.cdx.json` com `syft`.
+2. **Scan & OpenVEX (`2,0 pts`):** Rodar `trivy` e preencher o `TODO` em `attestations/vex_customizado.openvex.json`.
+3. **Cosign & Ataque Simulado (`2,5 pts`):** Assinar pelo digest, mostrar o bloqueio ao trocar a imagem por `busybox` (`Error: no signatures found`), restaurar e anexar SBOM + OpenVEX.
+4. **Conftest (`2,0 pts`):** Completar regra(s) em `policies/openvex_audit.rego` e mostrar logs reais de `FAIL` (erros propositais) e `PASS` (tudo certo).
+5. **Dossiê, Bloco Express & Validação (`1,5 pt`):** Gerar `dist/dossie_conformidade.json`, apagar `cosign.key`, rodar `selfcheck --trilha 2` sem erros e responder ao Bloco Express *(dispensado se marcou `Modo Incremental`)*.
 
-### 🟡 Trilha 2 — Sandbox CLI Local & Enforcement (10,0 pts | Alvo: ~100 min)
-| Critério | Pontos | Requisitos para Pontuação Máxima |
-| :--- | :---: | :--- |
-| **1. Sandbox, `--ignore-scripts`, Digest & SBOM** | **2,0** | Execução isolada de `npm install --ignore-scripts`, build/push em `localhost:5000`, captura real de `$IMAGE_DIGEST` e geração de `dist/sbom.cdx.json` via `syft`. |
-| **2. Scan Trivy & OpenVEX (`vex_customizado`)** | **2,0** | Execução do `trivy image --severity HIGH,CRITICAL` e preenchimento completo de `attestations/vex_customizado.openvex.json` sem `TODO`s. |
-| **3. Cosign, Ataque Tag Tampering & In-Toto** | **2,5** | Assinatura por digest, log comprovando bloqueio de `busybox:latest` (`Error: no signatures found`), restauração e selagem das 2 atestações (`cyclonedx`, `openvex`) + `verify-attestation`. |
-| **4. Enforcement Conftest (`openvex_audit.rego`)** | **2,0** | Conclusão de regra(s) `TODO` em `policies/openvex_audit.rego` + logs reais de `conftest test` provando `FAIL` (`Dockerfile.inseguro` + `GPL-3.0`) e `PASS` (`Dockerfile.app`, SLSA, OpenVEX). |
-| **5. Dossiê, Bloco Express & Self-Check** | **1,5** | `dist/dossie_conformidade.json` gerado + remoção de `cosign.key` + `selfcheck --trilha 2` OK + Bloco Express de Aulas 01/05 preenchido *(dispensado se `[x] Modo Incremental`)*. |
-
----
-
-### 🔴 Trilha 3 — Engenharia de Esteira em Nuvem & Keyless OIDC (10,0 pts | Alvo: ~95 min)
-| Critério | Pontos | Requisitos para Pontuação Máxima |
-| :--- | :---: | :--- |
-| **1. Hardening do Workflow & Remediação `GPL-3.0`** | **2,0** | Resolução dos `TODO`s (`id-token: write` e SHA-1 de `setup-node`) antes do push + captura da 1ª run bloqueada + remoção limpa da `gpl-math-lib` nos 3 locais. |
-| **2. SBOM & Atestação OpenVEX em Nuvem** | **2,0** | Preenchimento de `attestations/vex_customizado.openvex.json` sem `TODO`s + geração automática do SBOM CycloneDX e atestação *in-toto* no GHCR na run verde. |
-| **3. Keyless Signing Público (Fulcio + Rekor)** | **2,5** | Run **verde** assinando via OIDC sem chaves estáticas + pacote público no GHCR + saída real de `cosign verify` e `verify-attestation` (via Codespaces/CLI) + índice no Rekor. |
-| **4. Quality Gate Conftest em CI/CD (`Rego v1`)** | **2,0** | Conclusão de regra(s) `TODO` em `policies/openvex_audit.rego` validada pelo pipeline + evidência real de bloqueio da licença `GPL-3.0` pelo `sbom_license.rego`. |
-| **5. Artifacts, Bloco Express & Self-Check** | **1,5** | Download do `supply-chain-evidence-bundle` + `selfcheck --trilha 3` sem pendências + Bloco Express de Aulas 01/02 preenchido *(dispensado se `[x] Modo Incremental`)*. |
+### 🔴 Trilha 3 — Esteira na Nuvem & Keyless (10,0 pts)
+1. **Ajuste da Esteira & Remoção da `GPL-3.0` (`2,0 pts`):** Resolver os 2 `TODO`s no `golden_pipeline_capstone.yml`, registrar a 1ª execução bloqueada e remover a `gpl-math-lib` nos 3 locais.
+2. **SBOM & OpenVEX na Nuvem (`2,0 pts`):** Completar `attestations/vex_customizado.openvex.json` sem `TODO` e comprovar a publicação do SBOM e atestação OpenVEX no GHCR.
+3. **Assinatura Keyless Pública (`2,5 pts`):** Execução **verde** no GitHub Actions + pacote público no GHCR + saída de `cosign verify` / `verify-attestation` (via Codespaces ou CLI) + registro no Rekor.
+4. **Portão de Políticas Rego v1 (`2,0 pts`):** Completar regra(s) em `policies/openvex_audit.rego` e comprovar o bloqueio da `GPL-3.0` na 1ª execução.
+5. **Artifacts, Bloco Express & Validação (`1,5 pt`):** Baixar o pacote `supply-chain-evidence-bundle`, rodar `selfcheck --trilha 3` sem erros e responder ao Bloco Express *(dispensado se marcou `Modo Incremental`)*.
